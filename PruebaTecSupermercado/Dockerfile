@@ -1,5 +1,14 @@
-FROM eclipse-temurin:17-jdk-alpine
-ARG JAR_FILE=target/PruebaTecSupermercado-0.0.1.jar
-COPY ${JAR_FILE} app_pruebatecsuper.jar
+FROM eclipse-temurin:17-jdk AS build
+WORKDIR /app
+COPY mvnw pom.xml ./
+COPY .mvn ./.mvn
+RUN chmod +x mvnw
+RUN ./mvnw -q -DskipTests dependency:go-offline
+COPY src ./src
+RUN ./mvnw -q -DskipTests package
+
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app_pruebatecsuper.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app_pruebatecsuper.jar"]
