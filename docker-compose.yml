@@ -5,7 +5,7 @@ services:
     build: PruebaTecSupermercado #nombre de la carpeta donde está el DockerFile
     mem_limit: 512m
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
       DB_URL: jdbc:mysql://pruebatecsuper:3306/pruebatecsuper?createDatabaseIfNotExist=true&serverTimezone=UTC
       DB_USER_NAME: root
