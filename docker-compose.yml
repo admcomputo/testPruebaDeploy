@@ -6,8 +6,15 @@ services:
     mem_limit: 512m
     ports:
       - "8081:8080"
+    
+    # 1. This block fixes the container's ability to resolve domains
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
     environment:
-      DB_URL: jdbc:mysql://167.157.26.45:3306/testnewserver_db?createDatabaseIfNotExist=true&serverTimezone=UTC
+      # 2. You can now safely use the domain name instead of the IP
+      DB_URL: jdbc:mysql://testnewserver.tis.cs.umss.edu.bo:3306/testnewserver_db?createDatabaseIfNotExist=true&serverTimezone=UTC
       DB_USER_NAME: testnewserver
       DB_PASSWORD: aQta7T4i71E3aBv
     restart: always
